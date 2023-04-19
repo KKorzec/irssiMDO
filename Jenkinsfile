@@ -20,8 +20,7 @@ pipeline {
         stage('Build') {
             steps {
               sh 'docker system prune -f'
-              //git 'https://github.com/adam-glab/JenkinsMDO.git/'
-              sh 'docker build -t irssibld . -f ITE/GCL08/AG400408/Lab05/DockerfileBuild'
+              sh 'docker build -t irssibld . -f /DockerfileBuild'
               sh 'docker volume create volout'
               sh 'docker run --mount type=volume,src="volin",dst=/app --mount type=volume,src="volout",dst=/app/result irssibld bash -c "ls -l && cd irssi && meson setup build && ninja -C build; cp -r ../irssi ../result"'
               echo 'Building...'
@@ -38,7 +37,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'docker build -t irssitst . -f ITE/GCL08/AG400408/Lab05/DockerfileTest'
+                sh 'docker build -t irssitst . -f /DockerfileTest'
                 sh 'docker run -t --mount type=volume,src="volin",dst=/app irssitst bash -c "cd irssi/build && meson test"'
             }
              post {

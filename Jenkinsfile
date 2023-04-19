@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                sh 'docker rm --force buffer'
+                sh 'docker rm -f buffer'
                 sh 'docker volume prune -f'
                 sh 'docker volume create volin'
                 sh 'docker run -v volin:/data --name buffer ubuntu'

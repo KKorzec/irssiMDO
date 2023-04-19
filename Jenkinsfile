@@ -8,8 +8,8 @@ pipeline {
         stage('Clone') {
             steps {
                 //sh 'docker rm -f buffer'
-                sh 'docker volume prune -f'
-                sh 'docker volume create volin'
+                //sh 'docker volume prune -f'
+                //sh 'docker volume create volin'
                 sh 'docker run -v volin:/data --name buffer ubuntu'
                 sh 'cd ~/ && find irssi || git clone https://github.com/irssi/irssi.git/'
                 sh 'docker cp ~/irssi buffer:/data'

@@ -10,6 +10,7 @@ pipeline {
 		checkout([$class: 'GitSCM', 
                     branches: [[name: '*/main']], 
                     userRemoteConfigs: [[url: 'https://github.com/KKorzec/irssiMDO']]])
+		echo 'Starting cloning...'
                 sh 'DOCKER_TLS_VERIFY=0 docker rm -f buffer'
                 sh 'docker volume prune -f'
                 sh 'docker volume create volin'

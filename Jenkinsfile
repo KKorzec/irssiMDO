@@ -19,8 +19,11 @@ pipeline {
         }
         stage('Build') {
             steps {
+	      checkout([$class: 'GitSCM', 
+              branches: [[name: '*/main']], 
+              userRemoteConfigs: [[url: 'https://github.com/KKorzec/irssiMDO']]])
               sh 'docker system prune -f'
-	      git 'https://github.com/KKorzec/irssiMDO'
+	      git 'https://github.com/KKorzec/MDOL6'
               sh 'docker build -t irssibld . -f DockerfileBuild'
               sh 'docker volume create volout'
               sh 'docker run --mount type=volume,src="volin",dst=/app --mount type=volume,src="volout",dst=/app/result irssibld bash -c "ls -l && cd irssi && meson setup build && ninja -C build; cp -r ../irssi ../result"'
